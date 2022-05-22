@@ -1,0 +1,11 @@
+
+* Org imenu filter
+
+[[https://github.com/rougier/org-imenu-filter][org-imenu-filter]] mode allows to filter imenu when in [[https://orgmode.org/][org-mode]]. Once mode is
+active, user can select a specific filter using the interactive
+~org-imenu-filter-select~ to specify a filter pattern. When used in combination
+with [[https://github.com/bmag/imenu-list][imenu-list]], this allows to have a sidebar with filtered entries.
+
+** Usage
+
+~M-x: org-imenu-filter-mode~
