@@ -9,3 +9,5 @@ with [[https://github.com/bmag/imenu-list][imenu-list]], this allows to have a s
 ** Usage
 
 ~M-x: org-imenu-filter-mode~
+
+[[file:org-imenu-filter.png]]
