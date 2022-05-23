@@ -1,13 +1,20 @@
 
-* Org imenu filter
-
-[[https://github.com/rougier/org-imenu-filter][org-imenu-filter]] mode allows to filter imenu when in [[https://orgmode.org/][org-mode]]. Once mode is
-active, user can select a specific filter using the interactive
-~org-imenu-filter-select~ to specify a filter pattern. When used in combination
-with [[https://github.com/bmag/imenu-list][imenu-list]], this allows to have a sidebar with filtered entries.
+* Org imenu
+[[https://github.com/rougier/org-imenu-filter][
+org-imenu]] shows a sidebar displaying the Imenu and allows the user to filter which headlines are shown using the interactive ~org-imenu-filter-select~ that uses the same syntax as [[https://orgmode.org/worg/org-tutorials/advanced-searching.html][org-mode search]].
 
 ** Usage
 
-~M-x: org-imenu-filter-mode~
+~M-x: org-imenu~
+
+** Key bindings:
+
+- f     :  filter items
+- tab   : fold/unfold item
+- s-tab : fold/unfold all items
+- space : show current item
+- enter : go to current item
+  
+** Screenshots
 
 [[file:org-imenu-filter.png]]
