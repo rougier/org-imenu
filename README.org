@@ -17,4 +17,4 @@ org-imenu]] shows a sidebar displaying the Imenu and allows the user to filter w
   
 ** Screenshots
 
-[[file:org-imenu-filter.png]]
+[[file:org-imenu.png]]
