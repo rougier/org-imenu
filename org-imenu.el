@@ -256,11 +256,14 @@ but you can also provide your own function '(filter (todo tags level)
       (widen))
     (imenu-list-minor-mode)
     (imenu-list-stop-timer)
+    (setq imenu-max-item-length 1000)
+    (setq truncate-lines 1)
+    (setq visual-line-mode -1)
     (org-imenu-update)
 
     (when (> (length heading) 0)
       (goto-char (point-min))
-      (search-forward heading)
+      (search-forward heading nil t)
       (imenu-list-display-dwim)))
 
   ;; Install our keymap
