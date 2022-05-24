@@ -95,7 +95,7 @@ but you can also provide your own function '(filter (todo tags level)
 
 (defun org-imenu-filter-format (element todo tags marker)
   "Format ELEMENT, TODO and TAGS as a string in order to insert it the index with the MARKER reference indicating where the element is in the document."
-  
+
   (let* ((node (org-element-property :raw-value element))
          (node (org-link-display-format (substring-no-properties node)))
          (node (concat
@@ -218,6 +218,20 @@ but you can also provide your own function '(filter (todo tags level)
   (interactive)
   (hs-toggle-hiding))
 
+(defun org-imenu-increase-depth ()
+  "Increase imenu depth"
+
+  (interactive)
+  (setq org-imenu-depth (+ org-imenu-depth 1))
+  (org-imenu-update))
+
+(defun org-imenu-decrease-depth ()
+  "Decrease imenu depth"
+
+  (interactive)
+  (setq org-imenu-depth (max 1 (- org-imenu-depth 1)))
+  (org-imenu-update))
+  
 (defun org-imenu-update ()
   "Update org-imenu"
 
