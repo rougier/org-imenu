@@ -239,10 +239,15 @@ but you can also provide your own function '(filter (todo tags level)
   (imenu-list-update t)
   (imenu-list-refresh))
 
+;;;###autoload
 (defun org-imenu ()
   "Activate org-imenu."
 
   (interactive)
+
+  (unless (derived-mode-p 'org-mode)
+    (error "Org-imenu can only be used when org-mode is active"))
+
   
   ;; Save current heading
   (let ((heading (substring-no-properties (or (org-get-heading t t t t) ""))))
