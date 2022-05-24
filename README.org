@@ -9,12 +9,14 @@ org-imenu]] shows a sidebar displaying the Imenu and allows the user to filter w
 
 ** Key bindings:
 
-- f     :  filter items
-- tab   : fold/unfold item
-- s-tab : fold/unfold all items
-- space : show current item
-- enter : go to current item
+- ~f~     : Filter items
+- ~g~     : Update org-imenu
+- ~tab~   : Fold/unfold item
+- ~+~ / ~-~ : Increase/decrease depth
+- ~s-tab~ : Fold/unfold all items
+- ~space~ : Show current item
+- ~enter~ : Go to current item
   
-** Screenshots
+** Screenshot
 
 [[file:org-imenu.png]]
