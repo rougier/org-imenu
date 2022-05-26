@@ -90,8 +90,14 @@ but you can also provide your own function '(filter (todo tags level)
     (setq org-imenu-filter-function
           (cdr (org-make-tags-matcher match)))
     (org-imenu-update)))
-    
-    
+        
+(defun org-imenu--list-depth-string (depth)
+  "Return a prefix string representing an entry's DEPTH."
+
+  (let* ((indents (cl-loop for i from 1 to depth collect " ")))
+    (format "%s%s"
+            (mapconcat #'identity indents " ")
+            (if indents " " ""))))
 
 (defun org-imenu-filter-format (element todo tags marker)
   "Format ELEMENT, TODO and TAGS as a string in order to insert it the index with the MARKER reference indicating where the element is in the document."
@@ -257,17 +263,23 @@ but you can also provide your own function '(filter (todo tags level)
     (imenu-list-minor-mode)
     (imenu-list-stop-timer)
     (setq imenu-max-item-length 1000)
-    (setq truncate-lines 1)
-    (setq visual-line-mode -1)
-    (org-imenu-update)
 
     (when (> (length heading) 0)
       (goto-char (point-min))
       (search-forward heading nil t)
       (imenu-list-display-dwim)))
 
+  (advice-add #'org-imenu-get-tree :override #'org-imenu-filter-get-tree)
+  (advice-add #'imenu-list--depth-string
+              :override #'org-imenu--list-depth-string)
+
   ;; Install our keymap
   (with-current-buffer "*Ilist*"
+
+    (setq truncate-lines 1)
+    (setq visual-line-mode -1)
+    (org-imenu-update)
+    
     (let ((map (make-sparse-keymap)))
       (define-key map (kbd "n")       #'org-imenu-next-item)
       (define-key map (kbd "p")       #'org-imenu-prev-item)
@@ -282,9 +294,7 @@ but you can also provide your own function '(filter (todo tags level)
       (define-key map (kbd "TAB")     #'org-imenu-toggle-folding-parent)
       (define-key map (kbd "SPC")     #'org-imenu-show-item)
       (define-key map (kbd "<ret>")   #'org-imenu-goto-item)
-      (use-local-map map)))
-  
-  (advice-add #'org-imenu-get-tree :override #'org-imenu-filter-get-tree))
+      (use-local-map map))))
 
 (defun org-imenu-quit ()
   "Inactivate org-imenu."
@@ -295,9 +305,11 @@ but you can also provide your own function '(filter (todo tags level)
       (quit-window nil (get-buffer-window "*Ilist*"))
       (switch-to-buffer (buffer-base-buffer))
       (widen)))
-  (advice-remove #'org-imenu-get-tree #'org-imenu-filter-get-tree))
-
+  (advice-remove #'org-imenu-get-tree #'org-imenu-filter-get-tree)
+  (advice-remove #'imenu-list--depth-string #'org-imenu--list-depth-string))
 
 (provide 'org-imenu)
 ;;; org-imenu.el ends here
+
+
 
