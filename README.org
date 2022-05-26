@@ -1,7 +1,7 @@
 
 * Org imenu
 [[https://github.com/rougier/org-imenu-filter][
-org-imenu]] shows a sidebar displaying the Imenu and allows the user to filter which headlines are shown using the interactive ~org-imenu-filter-select~ that uses the same syntax as [[https://orgmode.org/worg/org-tutorials/advanced-searching.html][org-mode search]].
+org-imenu]] shows a sidebar displaying the Imenu and allows the user to filter which headlines are shown using the interactive ~org-imenu-filter-select~ that uses the same syntax as [[https://orgmode.org/worg/org-tutorials/advanced-searching.html][org-mode search]]. This is very similar to [[https://github.com/alphapapa/org-sidebar][org-sidebar]] without the [[https://github.com/alphapapa/org-ql][org-ql]] dependency which means that org-imenu is probably less powerful than org-sidebar.
 
 ** Usage
 
