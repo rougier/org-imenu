@@ -72,7 +72,7 @@ It is usually interactively defined via 'org-imenu-filter-select'
 but you can also provide your own function '(filter (todo tags level)
 ...)'.")
 
-(defvar org-imenu--folding-status t
+(defvar org-imenu--folding-status nil
   "Folding status of the imenu-list")
 
 (defun org-imenu-filter ()
