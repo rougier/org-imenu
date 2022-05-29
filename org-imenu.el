@@ -99,7 +99,7 @@ but you can also provide your own function '(filter (todo tags level)
             (mapconcat #'identity indents " ")
             (if indents " " ""))))
 
-(defun org-imenu-filter-format (element todo tags marker)
+(defun org-imenu-filter-format (element todo tags marker level)
   "Format ELEMENT, TODO and TAGS as a string in order to insert it the index with the MARKER reference indicating where the element is in the document."
 
   (let* ((node (org-element-property :raw-value element))
@@ -108,10 +108,17 @@ but you can also provide your own function '(filter (todo tags level)
                 (when (and org-imenu-include-todo todo)
                   (format "%s " todo))
                 node
+                (if (= level 1)
+                    (propertize " " 'display '(raise .5))
+                  " ")
                 (when (and org-imenu-include-tags tags)
                   (propertize
-                   (format " :%s:" (mapconcat 'identity  tags ":"))
-                   'face 'org-tag))))
+                   (format ":%s:" (mapconcat 'identity  tags ":"))
+                   'face 'org-tag))
+                (if (= level 1)
+                    (propertize " " 'display '(raise -.5))
+                  " ")
+                ))
          (node (propertize node 'marker marker
                                 'org-imenu-marker marker
                                 'org-imenu t)))
@@ -141,7 +148,7 @@ but you can also provide your own function '(filter (todo tags level)
                          (goto-char begin)
                          (funcall org-imenu-filter-function
                                   nil (org-get-tags) level)))
-                (node (org-imenu-filter-format element todo tags marker))
+                (node (org-imenu-filter-format element todo tags marker level))
                 (children (org-imenu-filter-get-tree end match)))
            (goto-char end)
            (cond ((> level org-imenu-depth)
@@ -191,7 +198,7 @@ but you can also provide your own function '(filter (todo tags level)
   (interactive)
   (save-selected-window
     (save-excursion
-      (my/imenu-list-ret-dwim))))
+      (org-imenu-goto-item))))
 
 (defun org-imenu-goto-item ()
   "Go to the item at point."
@@ -262,7 +269,6 @@ but you can also provide your own function '(filter (todo tags level)
       (widen))
     (imenu-list-minor-mode)
     (imenu-list-stop-timer)
-    (setq imenu-max-item-length 1000)
 
     (when (> (length heading) 0)
       (goto-char (point-min))
