@@ -68,9 +68,14 @@
   (cdr (org-make-tags-matcher "*"))
   "Filter to decide if a headline is kept.
 
-It is usually interactively defined via 'org-imenu-filter-select'
+It is usually interactively defined via 'org-imenu-filter'
 but you can also provide your own function '(filter (todo tags level)
 ...)'.")
+
+(defvar org-imenu-filter-string "*"
+  "Active filter string representation.
+
+This can be used to display the current filter in the modeline.")
 
 (defvar org-imenu--folding-status nil
   "Folding status of the imenu-list")
@@ -87,6 +92,7 @@ but you can also provide your own function '(filter (todo tags level)
          (match (mapconcat #'identity match " ")))
     (when (string= "" match)
       (setq match "*"))
+    (setq org-imenu-filter-string match)
     (setq org-imenu-filter-function
           (cdr (org-make-tags-matcher match)))
     (org-imenu-update)))
