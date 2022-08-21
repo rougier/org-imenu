@@ -282,8 +282,7 @@ This can be used to display the current filter in the modeline.")
       (imenu-list-display-dwim)))
 
   (advice-add #'org-imenu-get-tree :override #'org-imenu-filter-get-tree)
-  (advice-add #'imenu-list--depth-string
-              :override #'org-imenu--list-depth-string)
+;;  (advice-add #'imenu-list--depth-string :override #'org-imenu--list-depth-string)
 
   ;; Install our keymap
   (with-current-buffer "*Ilist*"
