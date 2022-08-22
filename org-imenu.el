@@ -147,15 +147,15 @@ This can be used to display the current filter in the modeline.")
                 (marker (copy-marker begin))
                 (level (org-element-property :level element))
                 (todo (org-element-property :todo-keyword element))
-                (tags (save-excursion
-                         (goto-char begin)
-                         (org-get-tags)))
-                (tags (append parent-tags tags))
+                (local-tags (save-excursion
+                              (goto-char begin)
+                              (org-get-tags)))
+                (tags (append parent-tags local-tags))
                 (match (save-excursion
                          (goto-char begin)
                          (funcall org-imenu-filter-function
                                   nil tags level)))
-                (node (org-imenu-filter-format element todo tags marker level))
+                (node (org-imenu-filter-format element todo local-tags marker level))
                 (children (org-imenu-filter-get-tree end tags)))
            (goto-char end)
            (cond ((> level org-imenu-depth)
