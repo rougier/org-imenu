@@ -131,7 +131,7 @@ This can be used to display the current filter in the modeline.")
     node))
 
 
-(defun org-imenu-filter-get-tree (&optional bound parent-match)
+(defun org-imenu-filter-get-tree (&optional bound parent-tags)
   "Produce a filtered index for Imenu. Index is build from point to BOUND taking into account PARENT-MATCH that indicates if the parent node has been filtered out or not. Filtering is done using org-imenu-filter-current."
   
   (let* ((imenu '()))
@@ -149,19 +149,20 @@ This can be used to display the current filter in the modeline.")
                 (todo (org-element-property :todo-keyword element))
                 (tags (save-excursion
                          (goto-char begin)
-                          (org-get-tags)))
+                         (org-get-tags)))
+                (tags (append parent-tags tags))
                 (match (save-excursion
                          (goto-char begin)
                          (funcall org-imenu-filter-function
-                                  nil (org-get-tags) level)))
+                                  nil tags level)))
                 (node (org-imenu-filter-format element todo tags marker level))
-                (children (org-imenu-filter-get-tree end match)))
+                (children (org-imenu-filter-get-tree end tags)))
            (goto-char end)
            (cond ((> level org-imenu-depth)
                   nil)
                  ((> (length children) 0)
                   (add-to-list 'imenu (append (list node) children) t))
-                 ((or match parent-match)
+                 ((and match (> level 1))
                   (add-to-list 'imenu (cons node marker) t)))))))
     imenu))
 
